@@ -93,13 +93,25 @@ void es_primo(){
 
 void comparar_3_numeros(){
 	int mayor;
-	int array[];
+	int num1, num2, num3;
 	printf("Introduce 3 números: ");
-	for (int i=0;i<3;i++){
-	       scanf("%d", &array[i]);}
-	for (int i=1;i<3;i++){
-		if (array[0] > array[i]){
-			mayor = array[0];
+	scanf("%d", &num1);
+	scanf("%d", &num2);
+	scanf("%d", &num3);
+	mayor = num1;
+	if (num1 == num2 && num1 == num3){
+		printf("Los 3 números son iguales\n");
+		return; }
+	else if (num2 > mayor){ 
+		mayor = num2;	
+		if (num2 < mayor && num3 > mayor){
+			mayor = num3;
+		}
+		return ;
+	        }
+	printf("El mayor es %d\n", mayor);
+}
+	
 	
 
 
@@ -127,6 +139,9 @@ int main(){
 			break;
 		case 5:
 			es_primo();
+			break;
+		case 6:
+			comparar_3_numeros();
 			break;
 
 
