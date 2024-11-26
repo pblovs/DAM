@@ -16,6 +16,10 @@ void inicializar(Estudiante * est_rellenar, char * nombre, int edad, float nota)
 	est_rellenar->nota = nota;
 }
 
+void cumpleanios(Estudiante * cumpleanero) {
+	cumpleanero->edad++;
+}
+
 int main(){
 
 	Estudiante listado[MAX_NOMBRE]; //aqui reservamos la memoria
@@ -32,19 +36,27 @@ int main(){
 	scanf("%d", &num);
 	
 	for(int i=0; i < num; i++){
-
-		printf("INtroduce la edad ");
+		
+		printf("Estudiante %d\n", i+1);		
+		printf("Introduce el nombre ");
+		scanf("%s", nombre);
+		printf("Introduce la edad ");
 		scanf("%d", &edad);
 		printf("Introduce la nota ");
 		scanf("%f", &nota);
-		printf("INtroduce el nombre ");
-		scanf("%s", nombre);
+		printf("\n");
+
 
 		inicializar(&listado[i] , nombre, edad, nota);
 	}
 
 	for(int i = 0; i < num; i++){
-		printf("Estudiante %d\n", i);
-		printf("Edad: %p\n", &listado[i].edad);
+		printf("Estudiante %d\n", i+1);
+		printf("Nombre: %s\n", listado[i].nombre);
+		printf("Nota: %.2f\n", listado[i].nota);
+		printf("Edad: %d\n\n", listado[i].edad);
 	}
+
+	cumpleanios(&listado[1]);
+	printf("Edad: %d\n\n", listado[1].edad);
 }
