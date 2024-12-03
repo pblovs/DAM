@@ -20,10 +20,16 @@ typedef struct{
 	int cantidad;
 }Book;	
 
-void imprimir(Book * book){
+void imprimir(Book * book){  //función para imprimir un libro
 	
 	printf("%d, %s, %s, %.2lf$, %d, %d\n", book->id, book->titulo, book->autor, book->precio, book->genre, book->cantidad);
 
+}
+
+void comprobar_id(Book * book, int id_buscado){  //Función para comprobar el ID
+	if (id_buscado < 1 || id_buscado > MAX){
+			printf("Error, ID no encontrado.\n");
+	}
 }
 
 void mostrar(Book* books){
@@ -42,11 +48,8 @@ void mostrarLibro(Book* books){
 		if (id_buscado == books[i].id){
 			imprimir(&books[i]);
 		}
-		else if (id_buscado < 1 || id_buscado > MAX){
-			printf("Error\n");
-			break;
-		}
 	}
+	comprobar_id(books, id_buscado);	
 	printf("\n");
 }
 
@@ -62,6 +65,7 @@ void stock(Book* books){
 			printf("Ahora hay %d ejemplares de %s\n", books[i].cantidad, books[i].titulo);
 		}
 	}
+	comprobar_id(books, id_incrementar);
 	printf("\n");
 }
 
@@ -80,11 +84,11 @@ void autor(Book* books){
 	char autor_buscado[60];
 	int vacio;
 	printf("Introduce el nombre del autor: ");
-	scanf("%d", &vacio);
+	scanf("%d", &vacio);  //Esto es porque sino se guarda el salto de linea de la función anterior.
 	fgets(autor_buscado, sizeof(autor_buscado), stdin);
 	for( int i = 0; i < MAX; i++){
 
-		if(strncmp(autor_buscado, books[i].autor, 5) == 0){
+		if(strncmp(autor_buscado, books[i].autor, sizeof(books[i].autor) - 2) == 0){
 			imprimir(&books[i]);
 		}
 	}
