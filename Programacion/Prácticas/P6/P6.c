@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #define MAX 40
+#define AUTOR 60
+#define GENEROS 4
 
 typedef enum {
 		FICTION,
@@ -9,94 +11,114 @@ typedef enum {
 		POETRY,
 		THEATER,
 		ESSAY
-	} Genre;
+	} Genero;
+
+char *nombres_generos[] = {  //Creo un array de punteros con el nombre de los generos
+    "Fiction",
+    "Non-Fiction",
+    "Poetry",
+    "Theater",
+    "Essay"
+};
 
 typedef struct{
 	int id;
 	char titulo[80];
-	char autor[60];
+	char autor[AUTOR];
 	float precio;
-	Genre genre;
+	Genero genero;
 	int cantidad;
-}Book;	
+}LIBRO;	
 
-void imprimir(Book * book){  //función para imprimir un libro
-	
-	printf("%d, %s, %s, %.2lf$, %d, %d\n", book->id, book->titulo, book->autor, book->precio, book->genre, book->cantidad);
+void imprimir(LIBRO * libro){  //Función para imprimir un libro
+	printf("%d, %s, %s, %.2lf$, %s, %d\n", libro->id, libro->titulo, libro->autor, libro->precio, nombres_generos[libro->genero], libro->cantidad);
+}  //nombres_generos imprime el nombre del género en la posición a la que pertenezca el género del enum
 
-}
-
-void comprobar_id(Book * book, int id_buscado){  //Función para comprobar el ID
-	if (id_buscado < 1 || id_buscado > MAX){
-			printf("Error, ID no encontrado.\n");
+int comprobar(LIBRO * libro, int comprobado, int cantMin, int cantMax){  //Función para comprobar si el dato introducido es correcto
+	while (comprobado < cantMin || comprobado > cantMax){
+		printf("ERROR Introduce un número válido: ");
+		scanf("%d", &comprobado);
 	}
+	return comprobado;
 }
 
-void mostrar(Book* books){
+void mostrar(LIBRO * catalogo){  //Función para imprimir todos los libros
 	for( int i = 0; i < MAX; i++){
-		imprimir(&books[i]);
+		imprimir(&catalogo[i]);
 	}
 	printf("\n");
 }
 
-void mostrarLibro(Book* books){
+void mostrarLibro(LIBRO * catalogo){  //Función para buscar un libro por su ID
 	int id_buscado;
 	printf("Introduce el ID del libro a buscar: ");
 	scanf("%d", &id_buscado);
 
+	id_buscado = comprobar(catalogo, id_buscado, 1, MAX);
+
 	for( int i = 0; i < MAX; i++){
-		if (id_buscado == books[i].id){
-			imprimir(&books[i]);
+		if (id_buscado == catalogo[i].id){
+			imprimir(&catalogo[i]);
 		}
 	}
-	comprobar_id(books, id_buscado);	
 	printf("\n");
 }
 
-void stock(Book* books){
-	int id_incrementar, cant_incrementar;
-	printf("Introduce el ID del libro a reabastecer: ");
-	scanf("%d", &id_incrementar);
-	printf("Introduce la cantidad a añadir: ");
-	scanf("%d", &cant_incrementar);
-	for( int i = 0; i < MAX; i++){
-		if (id_incrementar == books[i].id){
-			books[i].cantidad += cant_incrementar;
-			printf("Ahora hay %d ejemplares de %s\n", books[i].cantidad, books[i].titulo);
+void stock(LIBRO * catalogo){  //Función para reabastecer un libro
+	int id_incrementar, cant_incrementar, respuesta;
+	printf("¿Desea reabastecer algún libro? (1 = SI , 0 = NO) ");
+	scanf("%d", &respuesta);
+	if (respuesta == 1){
+		printf("Introduce el ID del libro a reabastecer: ");
+		scanf("%d", &id_incrementar);
+
+		id_incrementar = comprobar(catalogo, id_incrementar, 1, MAX);
+
+		printf("Introduce la cantidad a añadir: ");
+		scanf("%d", &cant_incrementar);
+		for( int i = 0; i < MAX; i++){
+			if (id_incrementar == catalogo[i].id){
+				catalogo[i].cantidad += cant_incrementar;
+				printf("Ahora hay %d ejemplares de %s\n", catalogo[i].cantidad, catalogo[i].titulo);
+			}
 		}
 	}
-	comprobar_id(books, id_incrementar);
+	else if (respuesta == 0){
+		return;
+	}
 	printf("\n");
 }
 
-void categoria(Book* books){
+void categoria(LIBRO * catalogo){  //Función para imprimir todos los libros de una categoría
 	int categ;
-	printf("Muestra todos los libros de la categoría: ");
+	printf("Muestra todos los libros de la categoría (0-4): ");
 	scanf("%d", &categ);
+	categ = comprobar(catalogo, categ, 0, GENEROS);
 	for( int i = 0; i < MAX; i++){
-		if(categ == books[i].genre){
-			imprimir(&books[i]);
+		if(categ == catalogo[i].genero){
+			imprimir(&catalogo[i]);
 		}
 	}
+		printf("\n");
 }
 
-void autor(Book* books){
-	char autor_buscado[60];
+void autor(LIBRO * catalogo){  //Función que muestra los libros de un autor buscado
+	char autor_buscado[AUTOR];
 	int vacio;
+	char * p;
 	printf("Introduce el nombre del autor: ");
 	scanf("%d", &vacio);  //Esto es porque sino se guarda el salto de linea de la función anterior.
 	fgets(autor_buscado, sizeof(autor_buscado), stdin);
 	for( int i = 0; i < MAX; i++){
-
-		if(strncmp(autor_buscado, books[i].autor, sizeof(books[i].autor) - 2) == 0){
-			imprimir(&books[i]);
+		if(strncmp(autor_buscado, catalogo[i].autor, strlen(autor_buscado)-1) == 0){  //El -1 es para que no coja el \0
+			imprimir(&catalogo[i]);
 		}
 	}
 }
 
 int main(){
 
-    Book books[40] = {
+    LIBRO libros[MAX] = {
 	            {1, "To Kill a Mockingbird", "Harper Lee", 15.99, FICTION, 10},
 		    	{2, "1984", "George Orwell", 12.49, FICTION, 5},
 	            {3, "The Great Gatsby", "F. Scott Fitzgerald", 10.99, FICTION, 8},
@@ -139,9 +161,36 @@ int main(){
 	            {40, "Thus Spoke Zarathustra", "Friedrich Nietzsche", 14.99, ESSAY, 10}
 		        }; 
 
-    mostrar(books);
-    mostrarLibro(books);
-    stock(books);
-    categoria(books);
-    autor(books);
+    int opcion;
+	printf("\nMenú:\n");
+    printf("1. Mostrar todos los libros\n");
+    printf("2. Buscar libro por ID\n");
+    printf("3. Reabastecer stock\n");
+    printf("4. Mostrar libros por categoría\n");
+    printf("5. Buscar libros por autor\n");
+    printf("Elige una opción: ");
+    scanf("%d", &opcion);
+    printf("\n");
+
+    switch (opcion) {
+        case 1: 
+        	mostrar(libros); 
+        	break;
+        case 2: 
+        	mostrarLibro(libros); 
+        	break;
+        case 3: 
+        	stock(libros); 
+        	break;
+        case 4: 
+        	categoria(libros); 
+        	break;
+        case 5: 
+        	autor(libros); 
+        	break;
+        default: 
+        	printf("Opción inválida\n");
+    }
+
+    return 0;
 }
