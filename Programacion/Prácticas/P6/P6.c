@@ -120,12 +120,24 @@ void añadirLibro(LIBRO * catalogo, int cant_añadir){
 	LIBRO * catalogoNuevo = (LIBRO *)realloc(catalogo, (40+cant_añadir) * sizeof(LIBRO));
 
 	for (int i = 40; i < (40+cant_añadir); i++){
+		printf("Libro nº: ");
+		scanf("%d", &catalogoNuevo[i].id);
 		printf("Introduce el titulo: ");
 		scanf("%s", catalogoNuevo[i].titulo);
+		printf("Introduce el autor: ");
+		scanf("%s", catalogoNuevo[i].autor);
+		printf("Introduce el precio: ");
+		scanf("%f", &catalogoNuevo[i].precio);
+		//printf("Introduce el genero: ");
+		//scanf("%d", &catalogoNuevo[i].genero);
+		printf("Introduce la cantidad: ");
+		scanf("%d", &catalogoNuevo[i].cantidad);
+
 	}
 
 	for (int i = 0; i < (40+cant_añadir); i++){
-		printf("%s", catalogoNuevo[i].titulo);
+		printf("ID: %d, Título: %s, Autor: %s, %.2lf$, Género: %s, Cantidad: %d\n", catalogoNuevo[i].id, catalogoNuevo[i].titulo, catalogoNuevo[i].autor, catalogoNuevo[i].precio,
+		 nombres_generos[catalogoNuevo[i].genero], catalogoNuevo[i].cantidad);
 	}
 	
 
