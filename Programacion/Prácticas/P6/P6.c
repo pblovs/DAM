@@ -88,7 +88,7 @@ void autor(LIBRO * catalogo, char autor_buscado[AUTOR]){  //Función que muestra
 
 	int encontrado = 0; 
     for (int i = 0; i < MAX; i++) {
-        if (strstr(catalogo[i].autor, autor_buscado) != NULL) { //La función strstr() busca la primera aparición de string2 en string1. La función ignora el carácter nulo (\0) que finaliza string2 en el proceso coincidente.
+        if (strstr(catalogo[i].autor, autor_buscado) != NULL) { //La función strstr() busca la primera aparición de string2 en string1
             imprimir(&catalogo[i]);
             encontrado = 1;
         }
@@ -126,15 +126,15 @@ void añadirLibro(LIBRO * catalogo, int cant_añadir){
 		printf("Libro nº: ");
 		scanf("%d", &catalogoNuevo[i].id);
 		printf("Introduce el titulo: ");
-		scanf(" %[^\n]", catalogoNuevo[i].titulo);
+		scanf(" %[^\n]", catalogoNuevo[i].titulo); //Permite espacios
 		printf("Introduce el autor: ");
 		scanf(" %[^\n]", catalogoNuevo[i].autor);
 		printf("Introduce el precio: ");
 		scanf("%f", &catalogoNuevo[i].precio);
-		printf("Introduce el genero (0=Fiction, 1=Non-Fiction, 2=Poetry, 3=Theater, 4=Essay): ");
-		int gen;
+		printf("Introduce el genero (0=Ficcion, 1=No-Ficcion, 2=Poesia, 3=Teatro, 4=Ensayo): ");
+		int gen = 0; //Creo una variable para guardar el número que corresponde al género.
 		scanf("%d", &gen);
-		catalogoNuevo[i].genero = comprobar(&catalogo[i], gen, 0, GENEROS);
+		catalogoNuevo[i].genero = comprobar(&catalogo[i], gen, 0, GENEROS); //Guardo en el catalogo el género, la función comprobar comprueba que has introducido un número entre 0 y 4 y devuelve el número si está entre esos valores.
 		printf("Introduce la cantidad: ");
 		scanf("%d", &catalogoNuevo[i].cantidad);
 
