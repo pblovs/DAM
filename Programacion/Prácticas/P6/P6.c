@@ -111,7 +111,7 @@ void inicializarLibro(LIBRO * libro, int id, char* titulo, char* autor, double p
 
 void añadirLibro(LIBRO * catalogo, int cant_añadir){
 	
-	int tam = MAX + cant_añadir;
+	int tam = MAX + cant_añadir; //Variable que guarda la cantidad de libros más la que quieres añadir.
 
 	LIBRO * catalogoNuevo = (LIBRO *)realloc(catalogo, tam * sizeof(LIBRO));
 
@@ -145,6 +145,7 @@ void añadirLibro(LIBRO * catalogo, int cant_añadir){
 		 nombres_generos[catalogoNuevo[i].genero], catalogoNuevo[i].cantidad);
 	}
 	
+	free(catalogo);
 
 }
 
@@ -197,7 +198,6 @@ int main(int argc, char * argv[]){
 	            inicializarLibro(&catalogo[38], 39, "The Republic", "Plato", 16.00, ENSAYO, 6),
 	            inicializarLibro(&catalogo[39], 40, "Thus Spoke Zarathustra", "Friedrich Nietzsche", 14.99, ENSAYO, 10);
 	        
-		        
 
     if (argc > 1){
     	for(int i = 1; i < argc; i++){
@@ -221,7 +221,8 @@ int main(int argc, char * argv[]){
     	else if (strcmp(argv[1], "añadirLibro") == 0 && atoi(argv[2]) >= 0){
     		añadirLibro(catalogo, atoi(argv[2]));
     	}
-    	
+
+
     }
     else {
     	int opcion;
@@ -267,9 +268,11 @@ int main(int argc, char * argv[]){
         		printf("Opción inválida\n");
     	}
 
-    	return 0;
+
 	}
 
 	free(catalogo);
+	return 0;
+
 }
     
