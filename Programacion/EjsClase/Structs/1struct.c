@@ -1,26 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 	struct dias {
-		float temperatura;
+		double temperatura;
 		char nombre[10]; 
-	}
+	};
 
 int main(){
 
 	struct dias semana[8] ;
 
-	semana[0].nombre = "Lunes";
-	semana[1].nombre = "Martes";
-	semana[2].nombre = "Miércoles";
-	semana[3].nombre = "Jueves";
-	semana[4].nombre = "Viernes";
-	semana[5].nombre = "Sábado";
-	semana[6].nombre = "Domingo";
+	strcpy(semana[0].nombre, "Lunes");
+	strcpy(semana[1].nombre, "Martes");
+	strcpy(semana[2].nombre, "Miércoles");
+	strcpy(semana[3].nombre, "Jueves");
+	strcpy(semana[4].nombre, "Viernes");
+	strcpy(semana[5].nombre, "Sábado");
+	strcpy(semana[6].nombre, "Domingo");
 
 	for (int i = 0; i<7; i++){
 		printf("Temperatura del %s: ", semana[i].nombre);
-		scanf("%f", semana[i].temperatura);
+		scanf("%lf", &semana[i].temperatura);
 	}
 }
 	
