@@ -32,7 +32,7 @@ typedef struct{
 
 void imprimir(const LIBRO * libro); //Función para imprimir un libro
 
-int comprobar(LIBRO * libro, int comprobado, int cantMin, int cantMax);  //Función para comprobar si el dato introducido es correcto
+int comprobar(int comprobado, int cantMin, int cantMax);  //Función para comprobar si el dato introducido es correcto
 
 void mostrar(const LIBRO * catalogo);  //Función para imprimir todos los libros
 
@@ -107,23 +107,22 @@ int main(int argc, char * argv[]){
     	if (strcmp(argv[1], "mostrar") == 0){
     		mostrar(catalogo);
     	}
-    	else if (strcmp(argv[1], "mostrarLibro") == 0 && atoi(argv[2]) <= 40 && atoi(argv[2]) >= 1){
+    	else if (strcmp(argv[1], "mostrarLibro") == 0){
     		mostrarLibro(catalogo, atoi(argv[2]));
     	}
-    	else if (strcmp(argv[1], "stock") == 0 && atoi(argv[2]) <= 40 && atoi(argv[2]) >= 1){
+    	else if (strcmp(argv[1], "stock") == 0){
     		stock(catalogo, atoi(argv[2]), atoi(argv[3]));
     	}
-    	else if (strcmp(argv[1], "categoria") == 0 && atoi(argv[2]) <= 4 && atoi(argv[2]) >= 0){
+    	else if (strcmp(argv[1], "categoria") == 0){
     		categoria(catalogo, atoi(argv[2]));
     	}
     	else if (strcmp(argv[1], "autor") == 0){
     		autor(catalogo, argv[2]);
     	}
-    	else if (strcmp(argv[1], "añadirLibro") == 0 && atoi(argv[2]) >= 0){
+    	else if (strcmp(argv[1], "añadirLibro") == 0){
     		añadirLibro(&catalogo, atoi(argv[2]));
 
     	}
-
 
     }
     else {
@@ -176,7 +175,6 @@ int main(int argc, char * argv[]){
 	}
 
 
-	mostrar(catalogo);
 	free(catalogo);
 	return 0;
 
@@ -203,7 +201,7 @@ void añadirLibro(LIBRO ** direccion, int cant_añadir){
 		printf("Libro nº (>40): ");
 		int numLibro;
 		scanf("%d", &numLibro);
-		(*direccion)[i].id = comprobar(&(*direccion[i]), numLibro, 41, 100);
+		(*direccion)[i].id = comprobar(numLibro, 41, 100);
 		printf("Introduce el titulo: ");
 		scanf(" %[^\n]", (*direccion)[i].titulo); //Permite espacios y quita el salto de linea.
 		printf("Introduce el autor: ");
@@ -213,7 +211,7 @@ void añadirLibro(LIBRO ** direccion, int cant_añadir){
 		printf("Introduce el genero (0=Ficcion, 1=No-Ficcion, 2=Poesia, 3=Teatro, 4=Ensayo): ");
 		int gen = 0; //Creo una variable para guardar el número que corresponde al género.
 		scanf("%d", &gen);
-		(*direccion)[i].genero = comprobar(&(*direccion[i]), gen, 0, GENEROS); //Guardo en el catalogo el género, la función comprobar comprueba que has introducido un número entre 0 y 4 y devuelve el número si está entre esos valores.
+		(*direccion)[i].genero = comprobar(gen, 0, GENEROS); //Guardo en el catalogo el género, la función comprobar comprueba que has introducido un número entre 0 y 4 y devuelve el número si está entre esos valores.
 		printf("Introduce la cantidad: ");
 		scanf("%d", &(*direccion)[i].cantidad);
 
@@ -252,7 +250,7 @@ void autor(LIBRO * catalogo, char autor_buscado[AUTOR]){  //Función que muestra
 }
 
 void categoria(LIBRO * catalogo, int categ){  //Función para imprimir todos los libros de una categoría
-	categ = comprobar(catalogo, categ, 0, GENEROS);
+	categ = comprobar(categ, 0, GENEROS);
 	for( int i = 0; i < MAX; i++){
 		if(categ == catalogo[i].genero){
 			imprimir(&catalogo[i]);
@@ -263,6 +261,7 @@ void categoria(LIBRO * catalogo, int categ){  //Función para imprimir todos los
 
 void stock(LIBRO * catalogo, int id_incrementar, int cant_incrementar){  //Función para reabastecer un libro
 
+	id_incrementar = comprobar(id_incrementar, 0, MAX);
 	for( int i = 0; i < MAX; i++){
 		if (id_incrementar == catalogo[i].id){
 			catalogo[i].cantidad += cant_incrementar;
@@ -282,7 +281,7 @@ void mostrar(const LIBRO * catalogo){  //Función para imprimir todos los libros
 }
 
 void mostrarLibro(LIBRO * catalogo, int id_buscado){  //Función para buscar un libro por su ID
-	id_buscado = comprobar(catalogo, id_buscado, 1, MAX);
+	id_buscado = comprobar(id_buscado, 1, MAX);
 
 	for( int i = 0; i < MAX; i++){
 		if (id_buscado == catalogo[i].id){
@@ -297,10 +296,11 @@ void imprimir(const LIBRO * libro){  //Función para imprimir un libro
 	printf("ID: %d, Título: %s, Autor: %s, %.2lf$, Género: %s, Cantidad: %d\n", libro->id, libro->titulo, libro->autor, libro->precio, nombres_generos[libro->genero], libro->cantidad);
 }  //nombres_generos imprime el nombre del género en la posición a la que pertenezca el género del enum
 
-int comprobar(LIBRO * libro, int comprobado, int cantMin, int cantMax){  //Función para comprobar si el dato introducido es correcto
+int comprobar(int comprobado, int cantMin, int cantMax){  //Función para comprobar si el dato introducido es correcto
 	while (comprobado < cantMin || comprobado > cantMax){
 		printf("ERROR Introduce un número válido: ");
 		scanf("%d", &comprobado);
 	}
+	
 	return comprobado;
 }

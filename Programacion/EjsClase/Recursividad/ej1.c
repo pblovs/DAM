@@ -8,8 +8,10 @@ int main(){
 	
 	int contador = 0;
 	char cadena[20];
+
 	printf("Introduce una cadena: ");
 	scanf("%s", cadena);
+
 	int tam = strlen(cadena);
 
 	contarConsonantes(cadena, tam, &contador);

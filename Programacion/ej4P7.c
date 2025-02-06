@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 int palindroma(char * cadena, int primero, int ultimo);
 
@@ -11,20 +12,23 @@ int main(){
 	printf("Introduce una cadena: ");
 	scanf("%s", cadena);
 
-	palindroma(cadena, 0, strlen(cadena) - 1);
+	if (palindroma(cadena, 0, strlen(cadena) - 1)){
+		printf("Es palindroma");
+	}else{
+		printf("No es palindroma");
+	}
 }
 
 int palindroma(char * cadena, int primero, int ultimo){
 
 	if(ultimo <= primero){
-		printf("Es palindroma\n");
-		return 0;
+		return true;
 	}
 
 	if(cadena[primero] == cadena[ultimo]){
-		palindroma(cadena, primero + 1, ultimo - 1);
+		return palindroma(cadena, primero + 1, ultimo - 1);
 	}
 	else{
-		printf("No es palíndroma\n");
+		return false;
 	}
 }
