@@ -17,6 +17,10 @@ int main(){
 
 int contarPares(int num, int * contador){
 
+	if(num == 0){
+		return 0;
+	}
+
 	int digito = num % 10;
 
 	if(digito % 2 == 0){
