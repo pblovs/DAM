@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "dragones.h"
 
@@ -27,10 +28,10 @@ int calcularAtaqueDragon(Dragon dragones[], int i){
 }
 
 
-void mostrarDragones(Dragon dragones[], int *cantidad) {
-    printf("Dragones disponibles:\n");
-    for (int i = 0; i < *cantidad; i++) {
-        printf("%d. %s (Vida: %d, Ataque: %d)\n", i + 1, dragones[i].nombre, dragones[i].vida, dragones[i].ataque);
+void mostrarDragones(Dragon dragones[], int cantidad) {
+    printf("\nDRAGONES:\n");
+    for (int i = 0; i < cantidad; i++) {
+        printf("%d. %s (Vida: %d, Ataque: 0-%d)\n", i + 1, dragones[i].nombre, dragones[i].vida, dragones[i].ataque);
     }
 }
 

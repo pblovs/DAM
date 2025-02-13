@@ -1,6 +1,6 @@
 typedef struct{
 
-	char Nombre[20];
+	char nombre[30];
 	int ataque1;
 	int ataque2;
 	int vida;

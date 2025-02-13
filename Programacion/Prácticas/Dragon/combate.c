@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "dragones.h"
 #include "Personajes.h"
@@ -6,7 +7,7 @@
 
 void turnoDragon(Dragon dragones[], Personaje Personajes[], int cantPersonajes, int cantDragones, int PersonajeElegido, int i){
 
-	printf("Turno del Dragón.\n");
+	printf("\nTURNO DEL DRAGÓN.\n");
 	int ataqueDragon = calcularAtaqueDragon(dragones, i);
 	Personajes[PersonajeElegido].vida -= ataqueDragon;
 	printf("Has recibido %d de daño.\n", ataqueDragon);
@@ -17,7 +18,7 @@ void turnoJugador(Dragon dragones[], Personaje Personajes[], int cantPersonajes,
 
 	int ataque;
 	int ataquePersonaje = calcularAtaquePersonaje(Personajes, PersonajeElegido);
-	printf("Es tu turno.\n");
+	printf("\nTU TURNO.\n");
 	printf("Elige un ataque. ATAQUE 1 (1), ATAQUE 2 (2) : ");
 	scanf("%d", &ataque);
 
@@ -35,7 +36,7 @@ void turnoJugador(Dragon dragones[], Personaje Personajes[], int cantPersonajes,
 
 void combate(Dragon dragones[], Personaje Personajes[], int cantPersonajes, int cantDragones, int PersonajeElegido){
 
-	printf("EMPIEZA EL COMBATE\n");
+	printf("\nEMPIEZA EL COMBATE\n");
 
 	int i = 0;
 
@@ -43,14 +44,16 @@ void combate(Dragon dragones[], Personaje Personajes[], int cantPersonajes, int 
 
 		turnoJugador(dragones, Personajes, cantPersonajes, cantDragones, PersonajeElegido, i);
 		if (dragones[i].vida <= 0){
-			printf("Has matado al %s.\n", dragones[i].nombre);
-			i++;
+			printf("\nHas matado al %s.\n", dragones[i].nombre);
 			cantDragones--;
+			if (cantDragones > 0) {  // Solo aumentamos i si quedan dragones vivos
+        		i++;
+    		}
 		}
 
 		turnoDragon(dragones, Personajes, cantPersonajes, cantDragones, PersonajeElegido, i);
 		if (Personajes[PersonajeElegido].vida <= 0){
-			printf("%s ha muerto", Personajes[PersonajeElegido].nombre);
+			printf("%s ha muerto.\n", Personajes[PersonajeElegido].nombre);
 			cantPersonajes--;
 			PersonajeElegido = ElegirPersonaje();
 		}

@@ -4,6 +4,8 @@
 
 #include "dragones.h"
 #include "Personajes.h"
+#include "combate.h"
+
 
 int main() {
 
@@ -41,14 +43,14 @@ int main() {
 
     Dragon dragones[3];
     Personaje personajes[3];
-    int cantidad;
+    int cantidad = 3;
     int cantPersonajes = cantidad; 
     int cantDragones = cantidad;
 
     InicializarPersonajes(personajes, &cantidad);
     inicializarDragones(dragones, &cantidad);
 
-    mostrarDragones(dragones, &cantidad);
+    mostrarDragones(dragones, cantidad);
     MostrarPersonajes(personajes, &cantidad);
 
     int PersonajeElegido = ElegirPersonaje();
