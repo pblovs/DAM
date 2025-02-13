@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#include "dragones.h"
+#include "Personajes.h"
 
 int main() {
 
-    char empezar;
     printf("\n\n"
         "                              ` )\n"
         "                     (         (\n"
@@ -30,12 +33,29 @@ int main() {
         "     `:.          __`--.--'\\\n"
         "      `:.      --'     __   `.\n"
         "       `:.     --'         `-'\n"
-        "                                       Pulsa ESPACIO para empezar "
+        "                                       Pulsa ENTER para empezar "
     );
-    scanf("%c", &empezar);
-    if (empezar == ' '){
-        system("clear");
-    }
+   
+    getchar();
+    system("clear");
+
+    Dragon dragones[3];
+    Personaje personajes[3];
+    int cantidad;
+    int cantPersonajes = cantidad; 
+    int cantDragones = cantidad;
+
+    InicializarPersonajes(personajes, &cantidad);
+    inicializarDragones(dragones, &cantidad);
+
+    mostrarDragones(dragones, &cantidad);
+    MostrarPersonajes(personajes, &cantidad);
+
+    int PersonajeElegido = ElegirPersonaje();
+
+    combate(dragones, personajes, cantPersonajes, cantDragones, PersonajeElegido);
+
+
 
     return 0;
 }
