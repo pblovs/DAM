@@ -53,7 +53,7 @@ int main() {
     mostrarDragones(dragones, cantidad);
     MostrarPersonajes(personajes, &cantidad);
 
-    int PersonajeElegido = ElegirPersonaje();
+    int PersonajeElegido = ElegirPersonaje(personajes);
 
     combate(dragones, personajes, cantPersonajes, cantDragones, PersonajeElegido);
 

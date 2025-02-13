@@ -46,7 +46,11 @@ void combate(Dragon dragones[], Personaje Personajes[], int cantPersonajes, int 
 		if (dragones[i].vida <= 0){
 			printf("\nHas matado al %s.\n", dragones[i].nombre);
 			cantDragones--;
-			if (cantDragones > 0) {  // Solo aumentamos i si quedan dragones vivos
+			if(cantDragones == 0){
+				printf("HAS GANADO\n");
+				return ;
+			}
+			else if (cantDragones > 0) {  // Solo aumentamos i si quedan dragones vivos
         		i++;
     		}
 		}
@@ -54,17 +58,13 @@ void combate(Dragon dragones[], Personaje Personajes[], int cantPersonajes, int 
 		turnoDragon(dragones, Personajes, cantPersonajes, cantDragones, PersonajeElegido, i);
 		if (Personajes[PersonajeElegido].vida <= 0){
 			printf("%s ha muerto.\n", Personajes[PersonajeElegido].nombre);
+			Personajes[PersonajeElegido].estado = 0;
 			cantPersonajes--;
-			PersonajeElegido = ElegirPersonaje();
+			if(cantPersonajes == 0){
+				printf("GAME OVER\n");
+				return ;
+			}
+			PersonajeElegido = ElegirPersonaje(Personajes);
 		}
-	}
-	
-	if(cantPersonajes == 0){
-		printf("GAME OVER\n");
-		return ;
-	}
-	else if(cantDragones == 0){
-		printf("HAS GANADO\n");
-		return ;
 	}
 }

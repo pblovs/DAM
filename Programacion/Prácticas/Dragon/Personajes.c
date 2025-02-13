@@ -11,16 +11,19 @@ void InicializarPersonajes(Personaje personajes[], int * cantidad){
 	personajes[0].ataque1 = 20;
 	personajes[0].ataque2 = 40;
 	personajes[0].vida = 250;
+	personajes[0].estado = 1; //1=vivo 0=muerto
 
 	strcpy(personajes[1].nombre, "La arquera Jeanne	de Clisson");
 	personajes[1].ataque1 = 30;
 	personajes[1].ataque2 = 60;
 	personajes[1].vida = 200;
+	personajes[1].estado = 1;
 
 	strcpy(personajes[2].nombre, "El hechicero Froilan");
 	personajes[2].ataque1 = 45;
 	personajes[2].ataque2 = 80;
 	personajes[2].vida = 150;
+	personajes[2].estado = 1;
 
 }
 
@@ -41,12 +44,23 @@ void MostrarPersonajes(Personaje personajes[], int * cantidad){
 
 }
 
-int ElegirPersonaje(){
+int ElegirPersonaje(Personaje personajes[]){
 
 	int PersonajeElegido;
 
-	printf("\nSeleccione un personaje: ");
-	scanf("%d", &PersonajeElegido);
+	while (1) {
 
-	return PersonajeElegido;
+        printf("Seleccione un personaje (0-2): ");
+        scanf("%d", &PersonajeElegido);
+
+        if (PersonajeElegido < 0 || PersonajeElegido >= 3) {
+            printf("Opción inválida. Elige otro.\n");
+        } 
+        else if (personajes[PersonajeElegido].estado == 0) {
+            printf("Ese personaje está muerto. Elige otro.\n");
+        } 
+        else {
+            return PersonajeElegido;
+        }
+    }
 }
