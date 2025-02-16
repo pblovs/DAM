@@ -110,6 +110,8 @@ int main(){
 
 	while (1){
 
+		printf("          Tienda\n");
+
 		for (int i = 0; i < largo; i++){
 				for (int j = 0; j < ancho; j++){
 						if (i > 0 && i < (largo - 1)){
@@ -120,12 +122,24 @@ int main(){
 									printf("  ");
 								}
 								else if(i == selectorY && j == (ancho-1)){
-								printf("] Personajes");
-								}	
+									printf("] Personajes");
+								}
 								else {
 									printf("# "); //imprime las lineas de los lados
 								}
 						}
+						else if(i == (largo-1) && j == 6){
+									printf("__");
+						}
+						else if(i == (largo-1) && j == 5){
+									printf("#_");
+						}
+						else if(i == 0 && j == 6){
+									printf("¯¯");
+						}
+						else if(i == 0 && j == 5){
+									printf("#¯");
+						}	
 						else{
 							printf("# "); //imprime la linea de arriba y la de abajo
 						} 
@@ -133,7 +147,9 @@ int main(){
 				printf("\n");
 		}
 
-		printf("W = (Arriba),A = (Izquierda),S = (Abajo), D = (Derecha), Q = (Salir): \n");
+		printf("         Combate\n");
+
+		printf("\nPersonje: %s / Vida: %dhp / Ataque 1: %d / Ataque 2: 0-%d\n", personajes[PersonajeElegido].nombre, personajes[PersonajeElegido].vida, personajes[PersonajeElegido].ataque1, personajes[PersonajeElegido].ataque2);
 		//scanf("%c", &posicion);
 		posicion = getch(); // Captura la tecla sin Enter
 
