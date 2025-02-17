@@ -3,6 +3,11 @@
 #include <string.h>
 #include <termios.h>
 #include <unistd.h>
+#include "mapa.h"
+#include "Personajes.h"
+#include "dragones.h"
+#include "combate.h"
+
 
 // Función para capturar una tecla sin presionar Enter
 char getch() {
@@ -17,84 +22,12 @@ char getch() {
     return ch;
 }
 
-
-typedef struct{
-
-	char nombre[30];
-	int ataque1;
-	int ataque2;
-	int vida;
-	int estado;
-
-}Personaje;
-
-void InicializarPersonajes(Personaje personajes[], int * cantidad){
-
-	*cantidad = 3;
-
-	strcpy(personajes[0].nombre, "El caballero Pelayo");
-	personajes[0].ataque1 = 20;
-	personajes[0].ataque2 = 40;
-	personajes[0].vida = 250;
-	personajes[0].estado = 1; //1=vivo 0=muerto
-
-	strcpy(personajes[1].nombre, "La arquera Jeanne	de Clisson");
-	personajes[1].ataque1 = 30;
-	personajes[1].ataque2 = 60;
-	personajes[1].vida = 200;
-	personajes[1].estado = 1;
-
-	strcpy(personajes[2].nombre, "El hechicero Froilan");
-	personajes[2].ataque1 = 45;
-	personajes[2].ataque2 = 80;
-	personajes[2].vida = 150;
-	personajes[2].estado = 1;
-
-}
-
-int ElegirPersonaje(Personaje personajes[]){
-
-	int PersonajeElegido;
-
-	while (1) {
-
-        printf("Seleccione un personaje (0-2): ");
-        scanf("%d", &PersonajeElegido);
-
-        if (PersonajeElegido < 0 || PersonajeElegido >= 3) {
-            printf("Opción inválida. Elige otro.\n");
-        } 
-        else if (personajes[PersonajeElegido].estado == 0) {
-            printf("Ese personaje está muerto. Elige otro.\n");
-        } 
-        else {
-            return PersonajeElegido;
-        }
-    }
-}
-
-void simboloPersonaje(Personaje personajes[], int PersonajeElegido){
-
-	if(PersonajeElegido==0){
-		printf("ð ");
-	}
-	else if(PersonajeElegido==1){
-		printf("¢ ");
-	}
-	else if(PersonajeElegido==2){
-		printf("§ ");
-	}
-}
-
-int main(){
+void mapa(Dragon dragones[], int cantDragones, Personaje personajes[], int cantPersonajes, int PersonajeElegido){
 
 	system("clear");
 
-	Personaje personajes[3];
-	int cantidad = 3;
-	InicializarPersonajes(personajes, &cantidad);
-	int PersonajeElegido = 0;
-
+	int nivel = 0;
+	
 	int largo = 13;
 	int ancho = 13; 
 
@@ -150,7 +83,6 @@ int main(){
 		printf("         Combate\n");
 
 		printf("\nPersonje: %s / Vida: %dhp / Ataque 1: %d / Ataque 2: 0-%d\n", personajes[PersonajeElegido].nombre, personajes[PersonajeElegido].vida, personajes[PersonajeElegido].ataque1, personajes[PersonajeElegido].ataque2);
-		//scanf("%c", &posicion);
 		posicion = getch(); // Captura la tecla sin Enter
 
 		system("clear");
@@ -172,7 +104,14 @@ int main(){
 		}else if(posicion == 's' || posicion == 'S'){
 			vertical+= 1;
 
-			if(vertical > (largo - 2) ){
+			if(vertical > (largo - 2)){
+				if (horizontal == selectorY){ //si la posicionY del * es = posicionY de ] 
+            		combate(dragones, personajes, cantPersonajes, cantDragones, PersonajeElegido, nivel);
+            		for (int i = 0; i < cantPersonajes; i++) {
+    					personajes[i].vida = personajes[i].vidaMax;  // Recuperar la vida cuando acabe el combate
+    					personajes[i].estado = 1;
+					}
+            	}
 				vertical-=1;
 			}
 		
@@ -189,7 +128,7 @@ int main(){
 		}else if(posicion == 'q' || posicion == 'Q'){
 			break;
 		}
+		
+		printf("Nivel: %d", nivel);
 	}
-
-return 0;
 }

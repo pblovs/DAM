@@ -21,9 +21,9 @@ void inicializarDragones(Dragon dragones[], int *cantidad) {
 }
 
 
-int calcularAtaqueDragon(Dragon dragones[], int i){
+int calcularAtaqueDragon(Dragon dragones[], int nivel){
 
-    int ataque = rand() % (dragones[i].ataque + 1);
+    int ataque = rand() % (dragones[nivel].ataque + 1);
     return ataque;
 }
 

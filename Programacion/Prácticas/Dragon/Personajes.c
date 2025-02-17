@@ -11,18 +11,21 @@ void InicializarPersonajes(Personaje personajes[], int * cantidad){
 	personajes[0].ataque1 = 20;
 	personajes[0].ataque2 = 40;
 	personajes[0].vida = 250;
+	personajes[0].vidaMax = 250;
 	personajes[0].estado = 1; //1=vivo 0=muerto
 
 	strcpy(personajes[1].nombre, "La arquera Jeanne	de Clisson");
 	personajes[1].ataque1 = 30;
 	personajes[1].ataque2 = 60;
 	personajes[1].vida = 200;
+	personajes[1].vidaMax = 200;
 	personajes[1].estado = 1;
 
 	strcpy(personajes[2].nombre, "El hechicero Froilan");
 	personajes[2].ataque1 = 45;
 	personajes[2].ataque2 = 80;
 	personajes[2].vida = 150;
+	personajes[2].vidaMax = 150;
 	personajes[2].estado = 1;
 
 }
@@ -63,4 +66,17 @@ int ElegirPersonaje(Personaje personajes[]){
             return PersonajeElegido;
         }
     }
+}
+
+void simboloPersonaje(Personaje personajes[], int PersonajeElegido){
+
+	if(PersonajeElegido==0){
+		printf("ð ");
+	}
+	else if(PersonajeElegido==1){
+		printf("¢ ");
+	}
+	else if(PersonajeElegido==2){
+		printf("§ ");
+	}
 }
