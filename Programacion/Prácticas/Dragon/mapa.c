@@ -106,7 +106,7 @@ void mapa(Dragon dragones[], int cantDragones, Personaje personajes[], int cantP
 
 			if(vertical > (largo - 2)){
 				if (horizontal == selectorY){ //si la posicionY del * es = posicionY de ] 
-            		combate(dragones, personajes, cantPersonajes, cantDragones, PersonajeElegido, nivel);
+            		combate(dragones, personajes, cantPersonajes, cantDragones, PersonajeElegido, &nivel);
             		for (int i = 0; i < cantPersonajes; i++) {
     					personajes[i].vida = personajes[i].vidaMax;  // Recuperar la vida cuando acabe el combate
     					personajes[i].estado = 1;
@@ -128,7 +128,8 @@ void mapa(Dragon dragones[], int cantDragones, Personaje personajes[], int cantP
 		}else if(posicion == 'q' || posicion == 'Q'){
 			break;
 		}
-		
+
 		printf("Nivel: %d", nivel);
+		
 	}
 }

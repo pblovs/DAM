@@ -8,7 +8,7 @@ typedef struct {
 } Dragon;
 
 void inicializarDragones(Dragon dragones[], int *cantidad);
-int calcularAtaqueDragon(Dragon dragones[], int nivel);
+int calcularAtaqueDragon(Dragon dragones[], int *nivel);
 void mostrarDragones(Dragon dragones[], int cantidad);
 
 #endif

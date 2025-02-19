@@ -51,6 +51,6 @@ int extraeVocales(char * cadena, int tam, char * cadenaVocales, int tamCadVoc){
 		tamCadVoc--;
 	}
 
-	return 	extraeVocales(cadena, tam-1, cadenaVocales, tamCadVoc);
+	return extraeVocales(cadena, tam-1, cadenaVocales, tamCadVoc);
 
 }
