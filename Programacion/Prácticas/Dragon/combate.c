@@ -5,20 +5,20 @@
 #include "Personajes.h"
 #include "combate.h"
 
-void turnoDragon(Dragon dragones[], Personaje Personajes[], int cantPersonajes, int cantDragones, int PersonajeElegido, int *nivel){
+void turnoDragon(Dragon dragones[], Personaje Personajes[], int PersonajeElegido, int *nivel){
 
-	printf("\nTURNO DEL DRAGÓN.\n");
+	printf("\x1b[38;5;13m\nTURNO DEL DRAGÓN.\n \n\x1b[0m");
 	int ataqueDragon = calcularAtaqueDragon(dragones, nivel);
 	Personajes[PersonajeElegido].vida -= ataqueDragon;
 	printf("Has recibido %d de daño.\n", ataqueDragon);
 	printf("Vida: %d hp\n", Personajes[PersonajeElegido].vida);
 }
 
-void turnoJugador(Dragon dragones[], Personaje Personajes[], int cantPersonajes, int cantDragones, int PersonajeElegido, int *nivel){
+void turnoJugador(Dragon dragones[], Personaje Personajes[], int PersonajeElegido, int *nivel){
 
 	int ataque;
 	int ataquePersonaje = calcularAtaquePersonaje(Personajes, PersonajeElegido);
-	printf("\nTU TURNO.\n");
+	printf("\x1b[38;5;12m\nTU TURNO.\n\n\x1b[0m");
 	printf("Elige un ataque. ATAQUE 1 (1), ATAQUE 2 (2) : ");
 	scanf("%d", &ataque);
 
@@ -34,35 +34,38 @@ void turnoJugador(Dragon dragones[], Personaje Personajes[], int cantPersonajes,
 	}
 }
 
-void combate(Dragon dragones[], Personaje Personajes[], int cantPersonajes, int cantDragones, int PersonajeElegido, int *nivel){
+void combate(Dragon dragones[], Personaje Personajes[], int *cantPersonajes, int *cantDragones, int PersonajeElegido, int *nivel){
 
-	printf("\nEMPIEZA EL COMBATE\n");
+	printf("\x1b[38;5;1m \nEMPIEZA EL COMBATE\n \n\x1b[0m");
 
-	printf("%s VS %s", Personajes[PersonajeElegido].nombre, dragones[*nivel].nombre);
+	printf("%s VS %s\n", Personajes[PersonajeElegido].nombre, dragones[*nivel].nombre);
 
 	while(1){
 
-		turnoJugador(dragones, Personajes, cantPersonajes, cantDragones, PersonajeElegido, nivel);
+		turnoJugador(dragones, Personajes, PersonajeElegido, nivel);
 		
-		turnoDragon(dragones, Personajes, cantPersonajes, cantDragones, PersonajeElegido, nivel);
 
 		if (dragones[*nivel].vida <= 0){
-			printf("\nHas matado al %s.\n", dragones[*nivel].nombre);
-			cantDragones--;
-			if(cantDragones == 0){
+			printf("\x1b[38;5;9m \nHas matado al %s.\n \n\x1b[0m", dragones[*nivel].nombre);
+			(*cantDragones)--;
+			if(*cantDragones == 0){
 				printf("HAS GANADO\n");
 			}
+			
 			(*nivel)++;
+		
 			getchar();
 			getchar(); //se pone dos veces para guardar el scanf anterior
 			system("clear"); 
 			return;
 		}
 
-		else if (Personajes[PersonajeElegido].vida <= 0){
-			printf("\n%s ha muerto.\n", Personajes[PersonajeElegido].nombre);
+		turnoDragon(dragones, Personajes, PersonajeElegido, nivel);
+
+		if (Personajes[PersonajeElegido].vida <= 0){
+			printf("\x1b[38;5;9m \n%s ha muerto.\n \n\x1b[0m", Personajes[PersonajeElegido].nombre);
 			Personajes[PersonajeElegido].estado = 0; //pasa a estar muerto
-			if(cantPersonajes == 0){
+			if(*cantPersonajes == 0){
 				printf("GAME OVER\n");
 			}
 			getchar();

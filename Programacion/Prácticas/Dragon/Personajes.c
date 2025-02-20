@@ -71,12 +71,12 @@ int ElegirPersonaje(Personaje personajes[]){
 void simboloPersonaje(Personaje personajes[], int PersonajeElegido){
 
 	if(PersonajeElegido==0){
-		printf("ð ");
+		printf(RED "ð " RESET);
 	}
 	else if(PersonajeElegido==1){
-		printf("¢ ");
+		printf(GREEN "¢ " RESET);
 	}
 	else if(PersonajeElegido==2){
-		printf("§ ");
+		printf(BLUE "§ " RESET);
 	}
 }

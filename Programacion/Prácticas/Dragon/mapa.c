@@ -22,7 +22,7 @@ char getch() {
     return ch;
 }
 
-void mapa(Dragon dragones[], int cantDragones, Personaje personajes[], int cantPersonajes, int PersonajeElegido){
+void mapa(Dragon dragones[], int *cantDragones, Personaje personajes[], int *cantPersonajes, int PersonajeElegido){
 
 	system("clear");
 
@@ -30,9 +30,6 @@ void mapa(Dragon dragones[], int cantDragones, Personaje personajes[], int cantP
 	
 	int largo = 13;
 	int ancho = 13; 
-
-	int i;
-	int j;
 
 	char posicion;
 
@@ -82,7 +79,17 @@ void mapa(Dragon dragones[], int cantDragones, Personaje personajes[], int cantP
 
 		printf("         Combate\n");
 
-		printf("\nPersonje: %s / Vida: %dhp / Ataque 1: %d / Ataque 2: 0-%d\n", personajes[PersonajeElegido].nombre, personajes[PersonajeElegido].vida, personajes[PersonajeElegido].ataque1, personajes[PersonajeElegido].ataque2);
+		printf("\nPersonaje: ");
+		printf(CYAN "%s " RESET, personajes[PersonajeElegido].nombre);
+		printf("Vida: ");
+		printf(GREEN "%dhp " RESET, personajes[PersonajeElegido].vida);
+		printf("Ataque 1: ");
+		printf(RED "%d " RESET, personajes[PersonajeElegido].ataque1);
+		printf("Ataque 2: ");
+		printf(RED "0-%d " RESET, personajes[PersonajeElegido].ataque2);
+		printf("Nivel: ");
+		printf(YELLOW "%d\n" RESET, nivel);
+
 		posicion = getch(); // Captura la tecla sin Enter
 
 		system("clear");
@@ -106,11 +113,13 @@ void mapa(Dragon dragones[], int cantDragones, Personaje personajes[], int cantP
 
 			if(vertical > (largo - 2)){
 				if (horizontal == selectorY){ //si la posicionY del * es = posicionY de ] 
-            		combate(dragones, personajes, cantPersonajes, cantDragones, PersonajeElegido, &nivel);
-            		for (int i = 0; i < cantPersonajes; i++) {
+					combate(dragones, personajes, cantPersonajes, cantDragones, PersonajeElegido, &nivel);
+            		for (int i = 0; i < *cantPersonajes; i++) {
     					personajes[i].vida = personajes[i].vidaMax;  // Recuperar la vida cuando acabe el combate
     					personajes[i].estado = 1;
 					}
+
+            		
             	}
 				vertical-=1;
 			}
@@ -128,8 +137,6 @@ void mapa(Dragon dragones[], int cantDragones, Personaje personajes[], int cantP
 		}else if(posicion == 'q' || posicion == 'Q'){
 			break;
 		}
-
-		printf("Nivel: %d", nivel);
 		
 	}
 }
