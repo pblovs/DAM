@@ -36,11 +36,13 @@ void turnoJugador(Dragon dragones[], Personaje Personajes[], int PersonajeElegid
 
 void combate(Dragon dragones[], Personaje Personajes[], int *cantPersonajes, int *cantDragones, int PersonajeElegido, int *nivel){
 
-	printf("\x1b[38;5;1m \nEMPIEZA EL COMBATE\n \n\x1b[0m");
+	if(*nivel < 3){
+		printf("\x1b[38;5;1m \nEMPIEZA EL COMBATE\n \n\x1b[0m");
+		printf("%s VS %s\n", Personajes[PersonajeElegido].nombre, dragones[*nivel].nombre);
+	}
+	
 
-	printf("%s VS %s\n", Personajes[PersonajeElegido].nombre, dragones[*nivel].nombre);
-
-	while(1){
+	while(*nivel < 3){
 
 		turnoJugador(dragones, Personajes, PersonajeElegido, nivel);
 		
@@ -52,7 +54,11 @@ void combate(Dragon dragones[], Personaje Personajes[], int *cantPersonajes, int
 				printf("HAS GANADO\n");
 			}
 			
-			(*nivel)++;
+			if (*nivel < 3){
+				(*nivel)++;
+			}
+
+		
 		
 			getchar();
 			getchar(); //se pone dos veces para guardar el scanf anterior
@@ -65,11 +71,13 @@ void combate(Dragon dragones[], Personaje Personajes[], int *cantPersonajes, int
 		if (Personajes[PersonajeElegido].vida <= 0){
 			printf("\x1b[38;5;9m \n%s ha muerto.\n \n\x1b[0m", Personajes[PersonajeElegido].nombre);
 			Personajes[PersonajeElegido].estado = 0; //pasa a estar muerto
+			(*cantPersonajes)--;
+			PersonajeElegido = ElegirPersonaje(Personajes);
 			if(*cantPersonajes == 0){
 				printf("GAME OVER\n");
+				return;
 			}
 			getchar();
-			return;
 		}
 		
 	}

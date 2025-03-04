@@ -40,7 +40,7 @@ void mapa(Dragon dragones[], int *cantDragones, Personaje personajes[], int *can
 
 	while (1){
 
-		printf("          Tienda\n");
+		printf("          Tienda (próximamente)\n");
 
 		for (int i = 0; i < largo; i++){
 				for (int j = 0; j < ancho; j++){
@@ -78,7 +78,14 @@ void mapa(Dragon dragones[], int *cantDragones, Personaje personajes[], int *can
 		}
 
 		printf("         Combate\n");
-
+		if(nivel < 3){
+			printf("         Nivel: ");
+		    printf(YELLOW "%d\n" RESET, nivel+1);
+		}
+		else{
+			printf("  Niveles compleatdos!\n");
+		}
+		
 		printf("\nPersonaje: ");
 		printf(CYAN "%s " RESET, personajes[PersonajeElegido].nombre);
 		printf("Vida: ");
@@ -87,8 +94,6 @@ void mapa(Dragon dragones[], int *cantDragones, Personaje personajes[], int *can
 		printf(RED "%d " RESET, personajes[PersonajeElegido].ataque1);
 		printf("Ataque 2: ");
 		printf(RED "0-%d " RESET, personajes[PersonajeElegido].ataque2);
-		printf("Nivel: ");
-		printf(YELLOW "%d\n" RESET, nivel);
 
 		posicion = getch(); // Captura la tecla sin Enter
 
@@ -113,6 +118,7 @@ void mapa(Dragon dragones[], int *cantDragones, Personaje personajes[], int *can
 
 			if(vertical > (largo - 2)){
 				if (horizontal == selectorY){ //si la posicionY del * es = posicionY de ] 
+
 					combate(dragones, personajes, cantPersonajes, cantDragones, PersonajeElegido, &nivel);
             		for (int i = 0; i < *cantPersonajes; i++) {
     					personajes[i].vida = personajes[i].vidaMax;  // Recuperar la vida cuando acabe el combate
