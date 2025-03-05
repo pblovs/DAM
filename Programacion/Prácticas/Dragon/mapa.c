@@ -9,18 +9,6 @@
 #include "combate.h"
 
 
-// Función para capturar una tecla sin presionar Enter
-char getch() {
-    struct termios oldt, newt;
-    char ch;
-    tcgetattr(STDIN_FILENO, &oldt); // Obtener configuración actual del terminal
-    newt = oldt;
-    newt.c_lflag &= ~(ICANON | ECHO); // Desactivar modo canónico y eco
-    tcsetattr(STDIN_FILENO, TCSANOW, &newt); // Aplicar cambios
-    ch = getchar(); // Leer tecla
-    tcsetattr(STDIN_FILENO, TCSANOW, &oldt); // Restaurar configuración
-    return ch;
-}
 
 void mapa(Dragon dragones[], int *cantDragones, Personaje personajes[], int *cantPersonajes, int PersonajeElegido){
 
@@ -120,9 +108,10 @@ void mapa(Dragon dragones[], int *cantDragones, Personaje personajes[], int *can
 				if (horizontal == selectorY){ //si la posicionY del * es = posicionY de ] 
 
 					combate(dragones, personajes, cantPersonajes, cantDragones, PersonajeElegido, &nivel);
-            		for (int i = 0; i < *cantPersonajes; i++) {
+            		for (int i = 0; i < 3; i++) {
     					personajes[i].vida = personajes[i].vidaMax;  // Recuperar la vida cuando acabe el combate
     					personajes[i].estado = 1;
+    					*cantPersonajes = 3;
 					}
 
             		

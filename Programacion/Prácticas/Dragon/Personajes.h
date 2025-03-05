@@ -20,6 +20,7 @@ typedef struct{
 void InicializarPersonajes(Personaje personajes[], int* cantidad);
 int calcularAtaquePersonaje(Personaje personajes[], int i);
 void MostrarPersonajes(Personaje personajes[], int * cantidad);
+char getch();
 int ElegirPersonaje(Personaje personajes[]);
 void simboloPersonaje(Personaje personajes[], int PersonajeElegido);
 

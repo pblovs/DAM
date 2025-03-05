@@ -49,11 +49,25 @@ void MostrarPersonajes(Personaje personajes[], int * cantidad){
 
 }
 
-
+// Función para capturar una tecla sin presionar Enter
+char getch() {
+    struct termios oldt, newt;
+    char ch;
+    tcgetattr(STDIN_FILENO, &oldt); // Obtener configuración actual del terminal
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO); // Desactivar modo canónico y eco
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt); // Aplicar cambios
+    ch = getchar(); // Leer tecla
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt); // Restaurar configuración
+    return ch;
+}
 
 int ElegirPersonaje(Personaje personajes[]){
 
 	int PersonajeElegido;
+
+	int selector = 10;
+
 
 	while (1) {
         
@@ -92,19 +106,15 @@ int ElegirPersonaje(Personaje personajes[]){
         printf("|______________________________________|  |____________________________________|  |____________________________________|\n\n");
 
   		
-  		int selector = 10;
 
         for(int i = 0; i < 3; i++){
         	for(int j = 0; j < 52; j++){
         		if (j == 9 || j==10 || j==11 || j==29 || j==30 || j==31 || j==49 || j==50 || j==51){
         			if ( i==1 && j==selector){
-        				printf("* ");
+        				printf("■ ");
         			}
         			else if ((i==1 && j==10) || (i==1 && j==30) || (i==1 && j==50)){
         				printf("  ");
-        			}
-        			else if ( i==1 && j==selector){
-        				printf("* ");
         			}
         			else{
         				printf("▢ ");
@@ -133,27 +143,16 @@ int ElegirPersonaje(Personaje personajes[]){
         		selector -= 20;
         	}
         }
+        else if (posicion == '\n') {
+            PersonajeElegido = (selector - 10) / 20; // (10-10) / 20 = 0 ; (30-10) / 20 = 1 ; (50-10) / 20 = 2 
 
-
-
-
-
-
-    
-
-        printf("Seleccione un personaje (0-2): \n");
-
-
-  		scanf("%d", &PersonajeElegido);
-        if (PersonajeElegido < 0 || PersonajeElegido >= 3) {
-            printf("Opción inválida. Elige otro.\n");
-        } 
-        else if (personajes[PersonajeElegido].estado == 0) {
-            printf("Ese personaje está muerto. Elige otro.\n");
-        } 
-        else {
-            return PersonajeElegido;
+            if (personajes[PersonajeElegido].estado == 0) {
+                printf("Ese personaje está muerto. Elige otro.\n");
+            } else {
+                return PersonajeElegido;
+            }
         }
+
     }
 }
 
