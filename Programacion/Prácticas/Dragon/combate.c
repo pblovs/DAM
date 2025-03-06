@@ -37,8 +37,12 @@ void turnoJugador(Dragon dragones[], Personaje Personajes[], int PersonajeElegid
 void combate(Dragon dragones[], Personaje Personajes[], int *cantPersonajes, int *cantDragones, int PersonajeElegido, int *nivel){
 
 	if(*nivel < 3){
-		printf("\x1b[38;5;1m \nEMPIEZA EL COMBATE\n \n\x1b[0m");
+		printf("\x1b[38;5;1m \nEMPIEZA EL COMBATE \n\x1b[0m");
 		printf("%s VS %s\n", Personajes[PersonajeElegido].nombre, dragones[*nivel].nombre);
+		personajeVSdragon(PersonajeElegido);
+		printf("\nContinuar ↵ ");
+		getchar();
+		system("clear");
 	}
 	
 
@@ -68,6 +72,7 @@ void combate(Dragon dragones[], Personaje Personajes[], int *cantPersonajes, int
 
 		if (Personajes[PersonajeElegido].vida <= 0){
 			printf("\x1b[38;5;9m \n%s ha muerto.\n \n\x1b[0m", Personajes[PersonajeElegido].nombre);
+			printf("Elegir otro personaje ↵ ");
 			Personajes[PersonajeElegido].estado = 0; //pasa a estar muerto
 			(*cantPersonajes)--;
 			if(*cantPersonajes == 0){
@@ -82,7 +87,10 @@ void combate(Dragon dragones[], Personaje Personajes[], int *cantPersonajes, int
 			getchar();
 			PersonajeElegido = ElegirPersonaje(Personajes);
 			printf("%s VS %s\n", Personajes[PersonajeElegido].nombre, dragones[*nivel].nombre);
+			personajeVSdragon(PersonajeElegido);
+			printf("\nContinuar ↵ ");
 			getchar();
+			system("clear");
 		}
 		
 	}

@@ -28,6 +28,8 @@ void mapa(Dragon dragones[], int *cantDragones, Personaje personajes[], int *can
 
 	while (1){
 
+		printf("\n       🅆 🄰 🅂 🄳 MOVERTE\n\n");
+
 		printf("          Tienda (próximamente)\n");
 
 		for (int i = 0; i < largo; i++){
