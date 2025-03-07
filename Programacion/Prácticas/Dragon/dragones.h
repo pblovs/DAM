@@ -4,6 +4,7 @@
 typedef struct {
     char nombre[50];
     int vida;
+    int vidaMax;
     int ataque;
 } Dragon;
 

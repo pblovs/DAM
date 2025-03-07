@@ -19,7 +19,7 @@ void turnoJugador(Dragon dragones[], Personaje Personajes[], int PersonajeElegid
 	int ataque;
 	int ataquePersonaje = calcularAtaquePersonaje(Personajes, PersonajeElegido);
 	printf("\x1b[38;5;12m\nTU TURNO.\n\n\x1b[0m");
-	printf("Elige un ataque. ATAQUE 1 (1), ATAQUE 2 (2) : ");
+	printf("Elige un ataque. ATAQUE 1 (%d), ATAQUE 2 (0-%d) : ", Personajes[PersonajeElegido].ataque1, Personajes[PersonajeElegido].ataque2);
 	scanf("%d", &ataque);
 
 	if (ataque == 1){
@@ -34,7 +34,7 @@ void turnoJugador(Dragon dragones[], Personaje Personajes[], int PersonajeElegid
 	}
 }
 
-void combate(Dragon dragones[], Personaje Personajes[], int *cantPersonajes, int *cantDragones, int PersonajeElegido, int *nivel){
+void combate(Dragon dragones[], Personaje Personajes[], int *cantPersonajes, int *cantDragones, int PersonajeElegido, int *nivel, int *oro){
 
 	if(*nivel < 3){
 		printf("\x1b[38;5;1m \nEMPIEZA EL COMBATE \n\x1b[0m");
@@ -60,6 +60,7 @@ void combate(Dragon dragones[], Personaje Personajes[], int *cantPersonajes, int
 			
 			if (*nivel < 3){
 				(*nivel)++;
+				*oro += 100;
 			}
 
 			getchar();
@@ -70,11 +71,11 @@ void combate(Dragon dragones[], Personaje Personajes[], int *cantPersonajes, int
 
 		turnoDragon(dragones, Personajes, PersonajeElegido, nivel);
 
-		if (Personajes[PersonajeElegido].vida <= 0){
+		if (Personajes[PersonajeElegido].vida <= 0){		
 			printf("\x1b[38;5;9m \n%s ha muerto.\n \n\x1b[0m", Personajes[PersonajeElegido].nombre);
-			printf("Elegir otro personaje ↵ ");
 			Personajes[PersonajeElegido].estado = 0; //pasa a estar muerto
 			(*cantPersonajes)--;
+
 			if(*cantPersonajes == 0){
 				
 				printf("GAME OVER\n");
@@ -83,8 +84,13 @@ void combate(Dragon dragones[], Personaje Personajes[], int *cantPersonajes, int
 				system("clear");
 				return;
 			}
+			else{
+				printf("Elegir otro personaje ↵ ");
+			}
+
 			getchar();
 			getchar();
+			system("clear");
 			PersonajeElegido = ElegirPersonaje(Personajes);
 			printf("%s VS %s\n", Personajes[PersonajeElegido].nombre, dragones[*nivel].nombre);
 			personajeVSdragon(PersonajeElegido);

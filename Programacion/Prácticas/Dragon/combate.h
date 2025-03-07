@@ -4,6 +4,6 @@
 
 void turnoDragon(Dragon dragones[], Personaje Personajes[], int PersonajeElegido, int *nivel);
 void turnoJugador(Dragon dragones[], Personaje Personajes[], int PersonajeElegido, int *nivel);
-void combate(Dragon dragones[], Personaje Personajes[], int *cantPersonajes, int *cantDragones, int PersonajeElegido, int *nivel);
+void combate(Dragon dragones[], Personaje Personajes[], int *cantPersonajes, int *cantDragones, int PersonajeElegido, int *nivel, int *oro);
 
 #endif

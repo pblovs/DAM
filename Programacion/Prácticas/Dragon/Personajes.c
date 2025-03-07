@@ -27,7 +27,7 @@ void InicializarPersonajes(Personaje personajes[], int * cantidad){
 	personajes[2].ataque1 = 45;
 	personajes[2].ataque2 = 80;
 	personajes[2].vida = 150;
-	personajes[2].vidaMax = 150;
+	personajes[2].vidaMax = 170;
 	personajes[2].estado = 1;
 
 }
@@ -102,7 +102,7 @@ int ElegirPersonaje(Personaje personajes[]){
     	printf("|                **#=       .&&#.      |  |       --==+..             ..===*-  |  |       #      #&&&&....+&&&&&&&&&   |\n");
         printf("|______________________________________|  |____________________________________|  |____________________________________|\n");
         printf("|                                      |  |                                    |  |                                    |\n");
-        printf("|      ♥ 250    ➹₁ 20     ➹₂ 0-40      |  |     ♥ 200    ➹₁ 30    ➹₂ 0-60      |  |      ♥ 150    ➹₁ 45    ➹₂ 0-80     |\n");
+        printf("|      ♥ 250    ➹₁ 20     ➹₂ 0-40      |  |     ♥ 200    ➹₁ 30    ➹₂ 0-60      |  |      ♥ 170    ➹₁ 45    ➹₂ 0-80     |\n");
         printf("|______________________________________|  |____________________________________|  |____________________________________|\n\n");
 
   		

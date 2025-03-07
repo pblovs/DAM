@@ -6,15 +6,18 @@
 void inicializarDragones(Dragon dragones[], int *cantidad) {
 
     strcpy(dragones[0].nombre, "Dragón de fuego");
-    dragones[0].vida = 250;
+    dragones[0].vida = 450;
+    dragones[0].vidaMax = 450;
     dragones[0].ataque = 40; // entre 0 y 40;
 
     strcpy(dragones[1].nombre, "Dragón de hielo");
-    dragones[1].vida = 300;
+    dragones[1].vida = 500;
+    dragones[1].vidaMax = 500;
     dragones[1].ataque = 50; // entre 0 y 50;
 
     strcpy(dragones[2].nombre, "Dragón eléctrico");
-    dragones[2].vida = 200;
+    dragones[2].vida = 600;
+    dragones[2].vidaMax = 600;
     dragones[2].ataque = 70; // entre 0 y 70;
 
     *cantidad = 3; 

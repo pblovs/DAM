@@ -14,6 +14,8 @@ void mapa(Dragon dragones[], int *cantDragones, Personaje personajes[], int *can
 
 	system("clear");
 
+	int oro = 0;
+
 	int nivel = 0;
 	
 	int largo = 13;
@@ -78,12 +80,15 @@ void mapa(Dragon dragones[], int *cantDragones, Personaje personajes[], int *can
 		
 		printf("\nPersonaje: ");
 		printf(CYAN "%s " RESET, personajes[PersonajeElegido].nombre);
-		printf("Vida: ");
+		printf("  Oro: ");
+		printf(YELLOW "%d\n" RESET, oro);
+		printf("\nVida: ");
 		printf(GREEN "%dhp " RESET, personajes[PersonajeElegido].vida);
-		printf("Ataque 1: ");
+		printf("  Ataque 1: ");
 		printf(RED "%d " RESET, personajes[PersonajeElegido].ataque1);
-		printf("Ataque 2: ");
+		printf("  Ataque 2: ");
 		printf(RED "0-%d " RESET, personajes[PersonajeElegido].ataque2);
+
 
 		posicion = getch(); // Captura la tecla sin Enter
 
@@ -109,9 +114,10 @@ void mapa(Dragon dragones[], int *cantDragones, Personaje personajes[], int *can
 			if(vertical > (largo - 2)){
 				if (horizontal == selectorY){ //si la posicionY del * es = posicionY de ] 
 
-					combate(dragones, personajes, cantPersonajes, cantDragones, PersonajeElegido, &nivel);
+					combate(dragones, personajes, cantPersonajes, cantDragones, PersonajeElegido, &nivel, &oro);
             		for (int i = 0; i < 3; i++) {
-    					personajes[i].vida = personajes[i].vidaMax;  // Recuperar la vida cuando acabe el combate
+    					personajes[i].vida = personajes[i].vidaMax;
+    					dragones[i].vida = dragones[i].vidaMax;  // Recuperar la vida cuando acabe el combate
     					personajes[i].estado = 1;
     					*cantPersonajes = 3;
 					}
