@@ -14,27 +14,62 @@ void turnoDragon(Dragon dragones[], Personaje Personajes[], int PersonajeElegido
 	printf("Vida: %d hp\n", Personajes[PersonajeElegido].vida);
 }
 
-void turnoJugador(Dragon dragones[], Personaje Personajes[], int PersonajeElegido, int *nivel){
+void turnoJugador(Dragon dragones[], Personaje Personajes[], int PersonajeElegido, int *nivel, int *cant_curas, int *cant_X2){
 
 	int ataque;
+	int eleccion;
+	static int multiplicador = 1; // Permite daño x2 
 	int ataquePersonaje = calcularAtaquePersonaje(Personajes, PersonajeElegido);
 	printf("\x1b[38;5;12m\nTU TURNO.\n\n\x1b[0m");
-	printf("Elige un ataque. ATAQUE 1 (%d), ATAQUE 2 (0-%d) : ", Personajes[PersonajeElegido].ataque1, Personajes[PersonajeElegido].ataque2);
-	scanf("%d", &ataque);
 
-	if (ataque == 1){
-		dragones[*nivel].vida -= Personajes[PersonajeElegido].ataque1;
-		printf("El dragón ha recibido %d de daño.\n", Personajes[PersonajeElegido].ataque1);
-		printf("El dragón tiene %d de vida\n", dragones[*nivel].vida);
-	}
-	else if(ataque == 2){
-		dragones[*nivel].vida -= ataquePersonaje;
-		printf("El dragón ha recibido %d de daño.\n", ataquePersonaje);
-		printf("El dragón tiene %d de vida\n", dragones[*nivel].vida);
-	}
+	printf("Elige una acción: ATACAR (1) , UTILIDADES (2): ");
+    scanf("%d", &eleccion);
+
+    if (eleccion == 2) {
+        char utilidad;
+        printf("Elige una utilidad - Cura (c) o Daño x2 (d): ");
+        scanf(" %c", &utilidad);
+
+        if (utilidad == 'c' && *cant_curas > 0) {
+            Personajes[PersonajeElegido].vida += 50;
+            (*cant_curas)--;
+            printf("%s se ha curado 50 de vida.\n", Personajes[PersonajeElegido].nombre);
+            printf("Vida: %d", Personajes[PersonajeElegido].vida);
+        } 
+        else if (utilidad == 'd' && *cant_X2 > 0) {
+            multiplicador = 2;
+            (*cant_X2)--;
+            printf("El siguiente ataque hará el doble de daño.\n");
+        } 
+        else {
+            printf("No tienes suficientes utilidades de este tipo.\n");
+        }
+    }
+
+    printf("Elige un ataque. ATAQUE 1 (%d), ATAQUE 2 (0-%d): ", Personajes[PersonajeElegido].ataque1, Personajes[PersonajeElegido].ataque2);
+    scanf("%d", &ataque);
+
+    if (ataque == 1) {
+        int daño = Personajes[PersonajeElegido].ataque1 * multiplicador;
+        dragones[*nivel].vida -= daño;
+        printf("El dragón ha recibido %d de daño.\n", daño);
+    } 
+    else if (ataque == 2) {
+        int daño = ataquePersonaje * multiplicador;
+        dragones[*nivel].vida -= daño;
+        printf("El dragón ha recibido %d de daño.\n", daño);
+    } 
+    else {
+        printf("Fallaste, ataque no válido.\n");
+    }
+
+    printf("El dragón tiene %d de vida\n", dragones[*nivel].vida);
+
+    multiplicador = 1; // Resetear el multiplicador después del ataque
+	
 }
 
-void combate(Dragon dragones[], Personaje Personajes[], int *cantPersonajes, int *cantDragones, int PersonajeElegido, int *nivel, int *oro){
+void combate(Dragon dragones[], Personaje Personajes[], int *cantPersonajes, int *cantDragones, int PersonajeElegido, int *nivel, int *oro, int *cant_curas, int *cant_X2){
 
 	if(*nivel < 3){
 		printf("\x1b[38;5;1m \nEMPIEZA EL COMBATE \n\x1b[0m");
@@ -48,7 +83,7 @@ void combate(Dragon dragones[], Personaje Personajes[], int *cantPersonajes, int
 
 	while(*nivel < 3){
 
-		turnoJugador(dragones, Personajes, PersonajeElegido, nivel);
+		turnoJugador(dragones, Personajes, PersonajeElegido, nivel, cant_curas, cant_X2);
 		
 
 		if (dragones[*nivel].vida <= 0){

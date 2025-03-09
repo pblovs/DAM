@@ -7,6 +7,8 @@
 #include "Personajes.h"
 #include "dragones.h"
 #include "combate.h"
+#include "tienda.h"
+
 
 
 
@@ -15,6 +17,9 @@ void mapa(Dragon dragones[], int *cantDragones, Personaje personajes[], int *can
 	system("clear");
 
 	int oro = 0;
+
+	int cant_curas = 0;
+	int cant_X2 = 0;
 
 	int nivel = 0;
 	
@@ -32,7 +37,7 @@ void mapa(Dragon dragones[], int *cantDragones, Personaje personajes[], int *can
 
 		printf("\n       🅆 🄰 🅂 🄳 MOVERTE\n\n");
 
-		printf("          Tienda (próximamente)\n");
+		printf("          Tienda\n");
 
 		for (int i = 0; i < largo; i++){
 				for (int j = 0; j < ancho; j++){
@@ -98,6 +103,10 @@ void mapa(Dragon dragones[], int *cantDragones, Personaje personajes[], int *can
 				vertical-= 1;
 
 			if(vertical < 1 ){ //si se pasa del borde le suma otro para que se contrarreste y se quede en el mismo sitio
+				if (horizontal == selectorY){
+					tienda(&oro, &cant_curas, &cant_X2);
+				} 
+
 				vertical+=1;
 			}
 
@@ -114,7 +123,7 @@ void mapa(Dragon dragones[], int *cantDragones, Personaje personajes[], int *can
 			if(vertical > (largo - 2)){
 				if (horizontal == selectorY){ //si la posicionY del * es = posicionY de ] 
 
-					combate(dragones, personajes, cantPersonajes, cantDragones, PersonajeElegido, &nivel, &oro);
+					combate(dragones, personajes, cantPersonajes, cantDragones, PersonajeElegido, &nivel, &oro, &cant_curas, &cant_X2);
             		for (int i = 0; i < 3; i++) {
     					personajes[i].vida = personajes[i].vidaMax;
     					dragones[i].vida = dragones[i].vidaMax;  // Recuperar la vida cuando acabe el combate
