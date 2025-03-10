@@ -1,5 +1,7 @@
 #ifndef COMBATE_H
 #define COMBATE_H
+#define RED "\x1b[31m"
+#define GREEN "\x1b[32m"
 #define RESET "\x1b[0m"
 
 void turnoDragon(Dragon dragones[], Personaje Personajes[], int PersonajeElegido, int *nivel);

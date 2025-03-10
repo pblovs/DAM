@@ -27,22 +27,22 @@ void turnoJugador(Dragon dragones[], Personaje Personajes[], int PersonajeElegid
 
     if (eleccion == 2) {
         char utilidad;
-        printf("Elige una utilidad - Cura (c) o Daño x2 (d): ");
+        printf("Elige una utilidad - Curas[%d] (c) o Daño X2[%d] (d): ", *cant_curas, *cant_X2);
         scanf(" %c", &utilidad);
 
         if (utilidad == 'c' && *cant_curas > 0) {
             Personajes[PersonajeElegido].vida += 50;
             (*cant_curas)--;
-            printf("%s se ha curado 50 de vida.\n", Personajes[PersonajeElegido].nombre);
-            printf("Vida: %d", Personajes[PersonajeElegido].vida);
+            printf(GREEN "%s se ha curado 50 de vida.\n\n" RESET, Personajes[PersonajeElegido].nombre);
+            printf("Vida: %d\n", Personajes[PersonajeElegido].vida);
         } 
         else if (utilidad == 'd' && *cant_X2 > 0) {
             multiplicador = 2;
             (*cant_X2)--;
-            printf("El siguiente ataque hará el doble de daño.\n");
+            printf(RED "El siguiente ataque hará el doble de daño.\n\n" RESET);
         } 
         else {
-            printf("No tienes suficientes utilidades de este tipo.\n");
+            printf("No tienes suficientes utilidades de este tipo.\n\n");
         }
     }
 

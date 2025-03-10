@@ -5,21 +5,21 @@
 
 void tienda(int *oro, int *cant_curas, int *cant_X2){
 
-	int cura_precio = 50;
-	int X2_precio = 50;
+	int cura_precio = 25;
+	int X2_precio = 40;
 
 	printf("\x1b[38;5;46m ¡Hola!, bienvenido a la tienda Doña Marta \n\n\x1b[0m");
 
 	while(1){
 
-		printf("\n Oro: %d\n", *oro);
+		printf("\n Oro: %d\n\n", *oro);
         printf(" Productos disponibles:\n");
-        printf("    Cura (50 oro)   - Tienes: %d\n", *cant_curas);
-        printf("    Daño X2 (50 oro) - Tienes: %d\n", *cant_X2);
+        printf("    Cura (25 oro)   - Tienes: %d\n", *cant_curas);
+        printf("    Daño X2 (40 oro) - Tienes: %d\n", *cant_X2);
         printf("    Salir de la tienda (X)\n");
 
 		char opcion;
-		printf("¿Qué desea comprar? C (Curas) D (Daño x 2) X (salir) ");
+		printf("\n¿Qué desea comprar? C (Curas) D (Daño x 2) X (salir) ");
 		scanf(" %c", &opcion);
 
 		if (opcion == 'c'){
@@ -55,5 +55,7 @@ void tienda(int *oro, int *cant_curas, int *cant_X2){
 		else{
 			printf("Opción inválida\n");
 		}
+
+		system("clear");
 	}
 }

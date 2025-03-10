@@ -8,6 +8,7 @@
 #include "dragones.h"
 #include "combate.h"
 #include "tienda.h"
+#include "mina.h"
 
 
 
@@ -48,8 +49,11 @@ void mapa(Dragon dragones[], int *cantDragones, Personaje personajes[], int *can
 								else if (j > 0 && j < (ancho - 1)){
 									printf("  ");
 								}
-								else if(i == selectorY && j == (ancho-1)){
+								else if(i == 4 && j == (ancho-1)){
 									printf("] Personajes");
+								}
+								else if(i == 8 && j == (ancho-1)){
+									printf("] Taberna");
 								}
 								else {
 									printf("# "); //imprime las lineas de los lados
@@ -93,6 +97,10 @@ void mapa(Dragon dragones[], int *cantDragones, Personaje personajes[], int *can
 		printf(RED "%d " RESET, personajes[PersonajeElegido].ataque1);
 		printf("  Ataque 2: ");
 		printf(RED "0-%d " RESET, personajes[PersonajeElegido].ataque2);
+		printf("\n\nCuras: ");
+		printf(GREEN "%d" RESET, cant_curas);
+		printf("  Daños X2: ");
+		printf(RED "%d\n" RESET, cant_X2);
 
 
 		posicion = getch(); // Captura la tecla sin Enter
@@ -140,8 +148,11 @@ void mapa(Dragon dragones[], int *cantDragones, Personaje personajes[], int *can
 			horizontal+=1;
 
 			if(horizontal > (ancho - 2)){
-				if (vertical == selectorY){ //si la posicionY del * es = posicionY de ] 
+				if (vertical == 4){ //si la posicionY del * es = posicionY de ] 
             		PersonajeElegido = ElegirPersonaje(personajes);
+            	}
+            	else if (vertical == 8){ //si la posicionY del * es = posicionY de ] 
+            		mina(&oro);
             	}
 				horizontal-=1;
 			}
